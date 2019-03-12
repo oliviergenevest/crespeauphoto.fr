@@ -7,7 +7,7 @@ import { config, useSpring, animated } from 'react-spring'
 import Layout from '../components/layout'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
-import GalleryLightbox from '../components/GalleryLightbox/GalleryLightbox.js'
+import GalleryLightbox from '../components/galleryLightbox/GalleryLightbox.js'
 
 /*
  bloc qui rendait une Img par ligne sur le starter
