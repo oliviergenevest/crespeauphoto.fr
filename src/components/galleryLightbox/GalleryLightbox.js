@@ -1,5 +1,5 @@
- import React from 'react';
-import { render } from 'react-dom';
+import React from 'react';
+
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
 
