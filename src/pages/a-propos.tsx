@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from  'gatsby'
 import Layout from '../components/layout'
 import { AnimatedBox } from '../elements'
 import SEO from '../components/SEO'
@@ -13,12 +14,14 @@ const About = () => {
 
   return (
     <Layout>
-      <SEO title="About | Jodie" desc="Hi. I'm LekoArts! You can visit my website or my other Gatsby projects." />
+      <SEO title="A propos | Cyril Crespeau - Photographe" desc="Cyril Crespeau - Photographe. Mon domaine d’activité s’étend de l’événementiel à la publicité." />
       <AnimatedBox style={pageAnimation} py={[6, 6, 6, 8]} px={[6, 6, 8, 6, 8, 13]}>
-        <h1>Hi. I'm LekoArts!</h1>
+        <h1>Compétences</h1>
         <p>
-          You can visit my <a href="https://www.lekoarts.de/en">website</a> or my other{' '}
-          <a href="https://gatsby-starter-portfolio.netlify.com">Gatsby projects</a>.
+          PHOTOGRAPHIE, WEB, ILLUSTRATION.
+          </p>
+          <p>
+          Mon domaine d’activité s’étend de l’événementiel à la publicité. Retrouvez dans les <Link to ='/projects'>portfolios</Link> un aperçu de mes propositions.
         </p>
       </AnimatedBox>
     </Layout>

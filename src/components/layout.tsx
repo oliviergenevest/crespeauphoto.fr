@@ -73,7 +73,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     color: black;
-    font-family: 'Work Sans', '-apple-system', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'Raleway', '-apple-system', 'Roboto', 'Helvetica', 'Arial', sans-serif;
     background: white;
     font-size: 18px;
   }
@@ -102,6 +102,7 @@ const PartialNavLink = (props: any) => (
 
 const Wrapper = styled.div`
   display: grid;
+
   grid-template-columns: ${props => props.theme.sidebarWidth.big} 1fr;
   @media (max-width: ${props => props.theme.breakpoints[4]}) {
     grid-template-columns: ${props => props.theme.sidebarWidth.normal} 1fr;
@@ -115,6 +116,7 @@ const Wrapper = styled.div`
 const SideBarInner = styled(Box)<{ bg: string }>`
   position: fixed;
   height: 100%;
+ 
   width: ${props => props.theme.sidebarWidth.big};
   display: flex;
   flex-direction: column;
@@ -138,11 +140,15 @@ const SideBarInner = styled(Box)<{ bg: string }>`
 `
 
 const Nav = styled(Flex)<{ color: string }>`
+
+
   a {
+    text-transform: uppercase;
     text-decoration: none;
     color: ${props => readableColor(`${props.color}`)};
-    font-size: ${props => props.theme.fontSizes[3]};
+    font-size: ${props => props.theme.fontSizes[1]};
     line-height: 1.5;
+
     &:hover,
     &:focus,
     &.navlink-active {
@@ -150,7 +156,7 @@ const Nav = styled(Flex)<{ color: string }>`
     }
 
     @media (max-width: ${props => props.theme.breakpoints[2]}) {
-      font-size: ${props => props.theme.fontSizes[2]};
+      font-size: ${props => props.theme.fontSizes[1]};
       margin-left: ${props => props.theme.space[4]};
     }
 
@@ -167,6 +173,7 @@ const Nav = styled(Flex)<{ color: string }>`
 `
 
 const Main = styled.main`
+  
   @media (min-width: calc(${props => props.theme.breakpoints[2]} + 1px)) {
     grid-column-start: 2;
   }
@@ -174,9 +181,10 @@ const Main = styled.main`
 
 const Footer = styled.footer<{ color: string }>`
   position: fixed;
+   font-size: ${props => props.theme.fontSizes[0]};
   width: ${props => props.theme.sidebarWidth.big};
   bottom: 0;
-
+  text-align: right;
   background: ${props => props.color};
 
   color: ${props => readableColor(`${props.color}`, `${props.theme.colors.grey}`, '#c3c3c3')};
@@ -228,11 +236,11 @@ const Layout = ({ children, color }: LayoutProps) => {
             <Flex
               flexWrap="nowrap"
               flexDirection={['row', 'row', 'row', 'column']}
-              alignItems={['center', 'center', 'center', 'flex-start']}
+              alignItems={['center', 'center', 'center', 'flex-end']}
               justifyContent="space-between"
             >
-              <Box width={['3rem', '4rem', '5rem', '6rem']}>
-                <Link to="/" aria-label="LekoArts, Back to Home">
+              <Box >
+                <Link to="/" aria-label="Cyril Crespeau, retour à l'accueil">
                   <Logo />
                 </Link>
               </Box>
@@ -242,7 +250,7 @@ const Layout = ({ children, color }: LayoutProps) => {
                 as="nav"
                 flexWrap="nowrap"
                 flexDirection={['row', 'row', 'row', 'column']}
-                alignItems="flex-start"
+                alignItems="flex-end"
               >
                 {data.navigation.edges.map(({ node: item }) => (
                   <PartialNavLink to={item.link} key={item.name}>
@@ -255,8 +263,9 @@ const Layout = ({ children, color }: LayoutProps) => {
           <Main>{children}</Main>
           <Footer color={color}>
             <Box p={[6, 6, 8]} fontSize={0}>
-              Starter by <a href="https://www.lekoarts.de/en">LekoArts</a>.<br />
-              <a href="https://github.com/LekoArts/gatsby-starter-portfolio-jodie">Source</a>.
+              (c) Cyril Crespeau, 2019. 
+              <br />
+             Tous droits réservés.
             </Box>
           </Footer>
         </Wrapper>

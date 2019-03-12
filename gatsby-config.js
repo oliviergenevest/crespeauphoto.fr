@@ -1,5 +1,5 @@
 require('dotenv').config({
-  path: `.env`,
+  path: `.env`, 
 });
 
 const config = require('./config')
@@ -48,13 +48,13 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    {
+  /*  {
       resolve: 'gatsby-source-instagram',
       options: {
         access_token: process.env.ACCESS_TOKEN,
         instagram_id: process.env.BUSINESS_ID,
       }
-    },
+    },*/
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
@@ -74,7 +74,7 @@ module.exports = {
         background_color: config.backgroundColor,
         theme_color: config.themeColor,
         display: 'standalone',
-        icon: 'src/favicon.png',
+        icon: 'static/logos/favicon.png',
       },
     },
     'gatsby-plugin-offline',

@@ -25,12 +25,13 @@ type PageProps = {
       }[]
     }
     aboutUs: ChildImageSharp
-    instagram: ChildImageSharp
+    references: ChildImageSharp
   }
 }
 
 const Area = styled(animated.div)`
   display: grid;
+  grid-gap: 2vw;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 35vw 40vw 25vw;
   grid-template-areas:
@@ -86,6 +87,7 @@ const AboutUs = styled(GridItem)`
 const ThreeProjects = styled.div`
   grid-area: three-projects;
   display: grid;
+  grid-gap:2vw;  
   grid-template-columns: repeat(3, 1fr);
 
   @media (max-width: ${props => props.theme.breakpoints[1]}) {
@@ -98,7 +100,7 @@ const Instagram = styled(GridItem)`
   grid-area: instagram;
 `
 
-const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, threeProjects, aboutUs, instagram } }) => {
+const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, threeProjects, aboutUs, references } }) => {
   const pageAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0 },
@@ -107,15 +109,16 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
 
   return (
     <Layout>
-      <SEO />
+      <SEO /> <br/><br/><br/><br/><p>Site en maintenance : actualisation des galeries. Merci de votre patience ! à très vite ! 😉</p>
       <Area style={pageAnimation}>
+
         <FirstProject to={firstProject.slug}>
           <Img fluid={firstProject.cover.childImageSharp.fluid} />
           <span>{firstProject.title}</span>
         </FirstProject>
-        <AboutUs to="/about">
+        <AboutUs to="/a-propos">
           <Img fluid={aboutUs.childImageSharp.fluid} />
-          <span>About</span>
+          <span>A propos</span>
         </AboutUs>
         <ThreeProjects>
           {threeProjects.edges.map(({ node: project }) => (
@@ -125,9 +128,9 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
             </GridItem>
           ))}
         </ThreeProjects>
-        <Instagram to="/instagram">
-          <Img fluid={instagram.childImageSharp.fluid} />
-          <span>Instagram</span>
+        <Instagram to="/references">
+          <Img fluid={references.childImageSharp.fluid} />
+          <span>Références</span>
         </Instagram>
       </Area>
     </Layout>
@@ -164,16 +167,16 @@ export const query = graphql`
         }
       }
     }
-    aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "about-us" }) {
+    aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "about" }) {
       childImageSharp {
         fluid(quality: 95, maxWidth: 1200) {
           ...GatsbyImageSharpFluid_withWebp
         }
       }
     }
-    instagram: file(sourceInstanceName: { eq: "images" }, name: { eq: "instagram" }) {
+  references: file(sourceInstanceName: { eq: "images" }, name: { eq: "references" }) {
       childImageSharp {
-        fluid(quality: 95, maxWidth: 1920) {
+        fluid(quality: 95, maxWidth: 1200) {
           ...GatsbyImageSharpFluid_withWebp
         }
       }

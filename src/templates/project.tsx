@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { transparentize, readableColor } from 'polished'
 import styled from 'styled-components'
@@ -7,14 +7,27 @@ import { config, useSpring, animated } from 'react-spring'
 import Layout from '../components/layout'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
+import GalleryLightbox from '../components/GalleryLightbox/GalleryLightbox'
 
+/*
+ bloc qui rendait une Img par ligne sur le starter
+          {images.edges.map(image => (
+            <Img
+              alt={image.node.name}
+              key={image.node.childImageSharp.fluid.src}
+              fluid={image.node.childImageSharp.fluid}
+            />
+          ))}
+
+*/
 const PBox = styled(AnimatedBox)`
   max-width: 1400px;
   margin: 0 auto;
+ 
 `
 
 const Content = styled(Box)<{ bg: string }>`
-  background-color: ${props => transparentize(0.9, props.bg)};
+  background-color: ${props => transparentize(1, props.bg)};
 
   .gatsby-image-wrapper:not(:last-child) {
     margin-bottom: ${props => props.theme.space[10]};
@@ -69,6 +82,10 @@ type PageProps = {
         node: {
           name: string
           childImageSharp: {
+            original: {
+              width: number
+              height: number
+            }
             fluid: {
               aspectRatio: number
               src: string
@@ -86,6 +103,8 @@ type PageProps = {
   }
 }
 
+  
+
 const Project: React.FunctionComponent<PageProps> = ({ data: { project, images } }) => {
   const categoryAnimation = useSpring({
     config: config.slow,
@@ -97,6 +116,20 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
   const descAnimation = useSpring({ config: config.slow, delay: 600, from: { opacity: 0 }, to: { opacity: 1 } })
   const imagesAnimation = useSpring({ config: config.slow, delay: 800, from: { opacity: 0 }, to: { opacity: 1 } })
 
+  const PHOTO_SET = images.edges.map((image, i) => {
+      return {
+        src: image.node.childImageSharp.fluid.src,
+        srcSet: image.node.childImageSharp.fluid.srcSet,
+        sizes: image.node.childImageSharp.fluid.sizes,
+        title: image.node.name,
+        alt: image.node.name,
+        width: image.node.childImageSharp.original.width,
+        height: image.node.childImageSharp.original.height,
+         fluid: image.node.childImageSharp.fluid
+      }
+  });
+
+
   return (
     <Layout color={project.color}>
       <SEO
@@ -107,6 +140,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
         banner={project.cover.childImageSharp.resize.src}
         individual={true}
       />
+
       <PBox py={10} px={[6, 6, 8, 10]}>
         <Category style={categoryAnimation}>{project.category}</Category>
         <animated.h1 style={titleAnimation}>{project.title_detail}</animated.h1>
@@ -116,20 +150,24 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       </PBox>
       <Content bg={project.color} py={10}>
         <PBox style={imagesAnimation} px={[6, 6, 8, 10]}>
-          {images.edges.map(image => (
-            <Img
-              alt={image.node.name}
-              key={image.node.childImageSharp.fluid.src}
-              fluid={image.node.childImageSharp.fluid}
-            />
-          ))}
+
+
+              <GalleryLightbox 
+                photos={PHOTO_SET} 
+                direction={"column"} 
+                margin="10"             
+              />
+             
+         
+
+
         </PBox>
       </Content>
       <PBox py={10} px={[6, 6, 8, 10]}>
-        <h2>Want to start your own project?</h2>
-        <PButton color={project.color} py={4} px={8}>
-          Contact Us
-        </PButton>
+        <h2>Vous avez un projet ?</h2>
+        <Link to ="/contact"><PButton color={project.color} py={4} px={8}>
+         Me contacter
+        </PButton></Link>
       </PBox>
     </Layout>
   )
@@ -159,13 +197,16 @@ export const query = graphql`
         }
       }
     }
-    images: allFile(filter: { relativePath: { regex: $images } }) {
+    images: allFile(filter: { relativePath: { regex: $images } }, sort: { fields: [birthtime], order: DESC }) {
       edges {
         node {
+
           name
+          relativeDirectory
           childImageSharp {
+            original{width, height}
             fluid(quality: 95, maxWidth: 1200) {
-              ...GatsbyImageSharpFluid_withWebp
+              ...GatsbyImageSharpFluid_tracedSVG
             }
           }
         }
@@ -173,3 +214,4 @@ export const query = graphql`
     }
   }
 `
+

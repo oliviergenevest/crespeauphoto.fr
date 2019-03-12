@@ -24,10 +24,13 @@ type PageProps = {
 
 const Area = styled(animated.div)`
   display: grid;
+  padding:0 2vw;
+   grid-gap:2vw;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 50vw;
 
   @media (max-width: ${props => props.theme.breakpoints[2]}) {
+    padding:0;
     grid-template-columns: 1fr;
     grid-auto-rows: 60vw;
   }
@@ -41,8 +44,8 @@ const Projects: React.FunctionComponent<PageProps> = ({ data: { projects } }) =>
   })
 
   return (
-    <Layout color="#000">
-      <SEO title="Projects | Jodie" />
+    <Layout color="#fff">
+      <SEO title="Portfolio | Cyril Crespeau - Photographe" />
       <Area style={pageAnimation}>
         {projects.edges.map(({ node: project }) => (
           <GridItem key={project.slug} to={project.slug}>

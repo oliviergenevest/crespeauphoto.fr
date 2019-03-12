@@ -3,8 +3,8 @@ const wrapper = promise =>
   promise.then(result => {
     if (result.errors) {
       throw result.errors
-    }
-    return result
+    }  
+    return result  
   })
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -14,7 +14,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await wrapper(
     graphql(`
-      {
+      { 
         projects: allProjectsYaml {
           edges {
             node {

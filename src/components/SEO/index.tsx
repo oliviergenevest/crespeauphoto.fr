@@ -96,27 +96,43 @@ const SEO = ({ title, desc, banner, pathname, node, individual }: Props) => {
     {
       '@type': 'ListItem',
       item: {
-        '@id': `${siteUrl}/about`,
-        name: 'About',
+        '@id': `${siteUrl}/a-propos`,
+        name: 'A propos',
       },
       position: 2,
     },
     {
       '@type': 'ListItem',
       item: {
-        '@id': `${siteUrl}/projects`,
-        name: 'About',
+        '@id': `${siteUrl}/references`,
+        name: 'Références',
       },
       position: 3,
     },
     {
       '@type': 'ListItem',
       item: {
-        '@id': `${siteUrl}/instagram`,
-        name: 'About',
+        '@id': `${siteUrl}/projects`,
+        name: 'Portfolio',
       },
       position: 4,
     },
+    {
+      '@type': 'ListItem',
+      item: {
+        '@id': `${siteUrl}/instagram`,
+        name: 'Instagram',
+      },
+      position: 5,
+    },
+    {
+      '@type': 'ListItem',
+      item: {
+        '@id': `${siteUrl}/contact`,
+        name: 'Contact',
+      },
+      position: 6,
+    }
   ]
 
   let schemaArticle = null
