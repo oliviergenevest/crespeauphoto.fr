@@ -13,6 +13,8 @@ module.exports = {
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
   userTwitter: '', // Twitter Username
+  userFacebook: '', // Facebook  Username 
+  userInstagram: '', // Instagram  Username
   ogSiteName: 'Photographe | Cyril Crespeau ', // Facebook Site Name
   ogLanguage: 'fr', // og:language
   googleAnalyticsID: 'UA-XXXXXX-X',

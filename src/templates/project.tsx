@@ -8,7 +8,7 @@ import Layout from '../components/layout'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
 import GalleryLightbox from '../components/galleryLightbox/GalleryLightbox.js'
-
+import Menu from 'react-burger-menu/lib/menus/slide'
 /*
  bloc qui rendait une Img par ligne sur le starter
           {images.edges.map(image => (
@@ -151,11 +151,11 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       <Content bg={project.color} py={10}>
         <PBox style={imagesAnimation} px={[6, 6, 8, 10]}>
 
-
+ 
               <GalleryLightbox 
                 photos={PHOTO_SET} 
                 direction={"column"} 
-                margin="10"             
+                margin={5}             
               />
              
          

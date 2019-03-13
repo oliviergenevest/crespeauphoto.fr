@@ -2,11 +2,68 @@ import React from 'react'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { graphql, Link, useStaticQuery } from 'gatsby'
 import { readableColor } from 'polished'
+import Menu from 'react-burger-menu/lib/menus/slide'
 import 'typeface-raleway'
 import { Box, Flex } from '../elements'
 import theme from '../../config/theme'
 import reset from '../styles/reset'
 import Logo from './logo'
+import { FaFacebook, FaInstagram} from 'react-icons/fa'
+
+const StyledBurgerMenu = styled.div`
+display: none;
+
+    .bm-item {
+      text-transform:uppercase;
+        text-align:center;  
+        display: inline-block;
+        text-decoration: none;
+        margin-bottom: 5vh;
+        color: #d1d1d1;
+        transition: color 0.2s;
+    }
+    .bm-item:hover {
+        color: white;
+    }
+    .bm-burger-button {
+        position: fixed;
+        width: 30px;
+        height: 25px;
+        right: 2vw;
+        top: 1.5rem;
+    }
+    .bm-burger-bars {
+        background: #000;
+        background:  ${props => readableColor(`${props.color}`)};
+
+    }
+    .bm-cross-button {
+        height: 30px;
+        width: 25px;
+    }
+    .bm-cross {
+        background: #fff;
+    }
+    .bm-menu {
+        background: rgba(0, 0, 0, 1);
+        padding: 2.5em 1.5em 0;
+        font-size: 2em;
+    }
+    .bm-morph-shape {
+        fill: #373a47;
+    }
+    .bm-item-list {
+        color: #fff;
+    }
+
+    .bm-overlay {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+      @media (max-width: ${props => props.theme.breakpoints[1]}) {
+    display: block;
+  }
+`
 
 const GlobalStyles = createGlobalStyle`
   *::before,
@@ -113,6 +170,7 @@ const Wrapper = styled.div`
   }
 `
 
+
 const SideBarInner = styled(Box)<{ bg: string }>`
   position: fixed;
   height: 100%;
@@ -142,6 +200,10 @@ const SideBarInner = styled(Box)<{ bg: string }>`
 const Nav = styled(Flex)<{ color: string }>`
 
 
+        @media (max-width: ${props => props.theme.breakpoints[1]}) {
+      display:none;
+    
+  }
   a {
     text-transform: uppercase;
     text-decoration: none;
@@ -161,11 +223,13 @@ const Nav = styled(Flex)<{ color: string }>`
     }
 
     @media (max-width: ${props => props.theme.breakpoints[1]}) {
+ 
       font-size: ${props => props.theme.fontSizes[1]};
       margin-left: ${props => props.theme.space[3]};
     }
 
     @media (max-width: ${props => props.theme.breakpoints[0]}) {
+   
       font-size: ${props => props.theme.fontSizes[0]};
       margin-left: ${props => props.theme.space[2]};
     }
@@ -207,6 +271,14 @@ const Footer = styled.footer<{ color: string }>`
   }
 `
 
+const SocialLinks = styled.div`
+   
+    a{
+        display: inline-block;
+        margin: .5vw;
+    }
+`
+
 type LayoutProps = { children: React.ReactNode } & typeof defaultProps
 
 const defaultProps = {
@@ -232,6 +304,17 @@ const Layout = ({ children, color }: LayoutProps) => {
       <>
         <GlobalStyles />
         <Wrapper>
+       <StyledBurgerMenu  color={color}>
+        <Menu right>
+          <a id="home" className="menu-item" href="/">Home</a>
+          <a id="about" className="menu-item" href="/about">About</a>
+          <a id="contact" className="menu-item" href="/contact">Contact</a>
+           <SocialLinks>
+                <a target="_blank" rel="noopener noreferrer" href=""><FaFacebook size={30} color='white'/></a>           
+                <a target="_blank" rel="noopener noreferrer" href=""><FaInstagram size={30} color='white'/></a>
+              </SocialLinks>
+        </Menu>
+        </StyledBurgerMenu>
           <SideBarInner bg={color} as="aside" p={[6, 6, 8]}>
             <Flex
               flexWrap="nowrap"
@@ -258,14 +341,20 @@ const Layout = ({ children, color }: LayoutProps) => {
                   </PartialNavLink>
                 ))}
               </Nav>
+               
             </Flex>
           </SideBarInner>
           <Main>{children}</Main>
           <Footer color={color}>
             <Box p={[6, 6, 8]} fontSize={0}>
+            <SocialLinks>
+                <a target="_blank" rel="noopener noreferrer" href=""><FaFacebook size={20} color={readableColor(color)}/></a>           
+                <a target="_blank" rel="noopener noreferrer" href=""><FaInstagram size={20} color={readableColor(color)}/></a>
+              </SocialLinks>
               (c) Cyril Crespeau, 2019. 
               <br />
-             Tous droits réservés.
+             Tous droits réservés. <Link to={'/credit'}>crédits</Link>
+              
             </Box>
           </Footer>
         </Wrapper>
