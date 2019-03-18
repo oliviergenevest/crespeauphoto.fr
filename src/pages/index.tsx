@@ -7,13 +7,12 @@ import Layout from '../components/layout'
 import GridItem from '../components/grid-item'
 import SEO from '../components/SEO'
 import { ChildImageSharp } from '../types'
-
+import GalleryLightbox from '../components/galleryLightbox/GalleryLightbox.js'
 type PageProps = {
   data: {
     firstProject: {
       title: string
       slug: string
-      cover: ChildImageSharp
     }
     threeProjects: {
       edges: {
@@ -69,70 +68,61 @@ const Area = styled(animated.div)`
     grid-template-areas:
       'first-project'
       'about-us'
-      'three-projects'
-      'three-projects'
-      'three-projects'
+     
       'instagram';
   }
 `
 
-const FirstProject = styled(GridItem)`
+const Description = styled(animated.div)`
+  max-width: 960px;
+  letter-spacing: -0.003em;
+  --baseline-multiplier: 0.179;
+  --x-height-multiplier: 0.35;
+  line-height: 1.58;
+`
+
+
+
+const Homepage = styled(GridItem)`
   grid-area: first-project;
 `
 
-const AboutUs = styled(GridItem)`
-  grid-area: about-us;
-`
 
-const ThreeProjects = styled.div`
-  grid-area: three-projects;
-  display: grid;
-  grid-gap:2vw;  
-  grid-template-columns: repeat(3, 1fr);
 
-  @media (max-width: ${props => props.theme.breakpoints[1]}) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
-`
 
-const Instagram = styled(GridItem)`
-  grid-area: instagram;
-`
 
-const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, threeProjects, aboutUs, references } }) => {
+const Index: React.FunctionComponent<PageProps> = ({ data: { projectHomepage, images } }) => {
   const pageAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0 },
     to: { opacity: 1 },
   })
+  const descAnimation = useSpring({ config: config.slow, delay: 600, from: { opacity: 0 }, to: { opacity: 1 } })
+ 
+  const PHOTO_SET = images.edges.map((image, i) => {
+      // creer 2 jeux de données un pour lightbox (fullsize) l'autre pour gallery (thumbnails , c'est celui-ci)
+      // pour cela : modifier la requele graphql en bas, la list des props en haut et passer en prop les 2 listes au composant GalleryLightbox
+        return {
+          src: image.node.childImageSharp.fluid.src,
+          srcSet: image.node.childImageSharp.fluid.srcSet,
+          title: image.node.name,
+          alt: image.node.name,
+          width: image.node.childImageSharp.original.width,
+          height: image.node.childImageSharp.original.height,
+          fluid: image.node.childImageSharp.fluid
+        }
+  });
 
   return (
     <Layout>
-      <SEO /> <br/><br/><br/><br/><p>Site en maintenance : actualisation des galeries. Merci de votre patience ! à très vite ! 😉</p>
-      <Area style={pageAnimation}>
+      <SEO />
 
-        <FirstProject to={firstProject.slug}>
-          <Img fluid={firstProject.cover.childImageSharp.fluid} />
-          <span>{firstProject.title}</span>
-        </FirstProject>
-        <AboutUs to="/a-propos">
-          <Img fluid={aboutUs.childImageSharp.fluid} />
-          <span>A propos</span>
-        </AboutUs>
-        <ThreeProjects>
-          {threeProjects.edges.map(({ node: project }) => (
-            <GridItem to={project.slug} key={project.slug}>
-              <Img fluid={project.cover.childImageSharp.fluid} />
-              <span>{project.title}</span>
-            </GridItem>
-          ))}
-        </ThreeProjects>
-        <Instagram to="/references">
-          <Img fluid={references.childImageSharp.fluid} />
-          <span>Références</span>
-        </Instagram>
-      </Area>
+        <GalleryLightbox 
+            photos={PHOTO_SET} 
+            direction={"column"} 
+            margin={1}             
+          />
+     
     </Layout>
   )
 }
@@ -141,45 +131,29 @@ export default Index
 
 export const query = graphql`
   query IndexQuery {
-    firstProject: projectsYaml {
+    projectHomepage: projectsYaml {
       title
       slug
-      cover {
-        childImageSharp {
-          fluid(quality: 95, maxWidth: 1200) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
+      desc
       }
-    }
-    threeProjects: allProjectsYaml(limit: 3, skip: 1) {
+
+    images: allFile(filter: { relativeDirectory: {eq:"homepage" } }, sort: { fields: [birthtime], order: DESC }) {
       edges {
         node {
-          title
-          slug
-          cover {
-            childImageSharp {
-              fluid(quality: 95, maxWidth: 1200) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
+          name
+          relativeDirectory
+          childImageSharp {
+            original{width, height}
+            fluid(quality: 95, maxWidth: 550) {
+              ...GatsbyImageSharpFluid_tracedSVG
             }
+
           }
         }
       }
     }
-    aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "about" }) {
-      childImageSharp {
-        fluid(quality: 95, maxWidth: 1200) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-  references: file(sourceInstanceName: { eq: "images" }, name: { eq: "references" }) {
-      childImageSharp {
-        fluid(quality: 95, maxWidth: 1200) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
+
+
+
   }
 `

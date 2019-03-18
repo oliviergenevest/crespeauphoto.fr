@@ -8,7 +8,7 @@ import Layout from '../components/layout'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
 import GalleryLightbox from '../components/galleryLightbox/GalleryLightbox.js'
-import Menu from 'react-burger-menu/lib/menus/slide'
+/*import Menu from 'react-burger-menu/lib/menus/slide'*/
 /*
  bloc qui rendait une Img par ligne sur le starter
           {images.edges.map(image => (
@@ -117,15 +117,17 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
   const imagesAnimation = useSpring({ config: config.slow, delay: 800, from: { opacity: 0 }, to: { opacity: 1 } })
 
   const PHOTO_SET = images.edges.map((image, i) => {
+    // creer 2 juex de données un pour lightbox (fullsize) l'autre pour gallery (thumbnails , c'est celui-ci)
+    // pour cela : modifier la requele graphql en bas, la list des props en haut et passer en prop les 2 listes au composant GalleryLightbox
       return {
         src: image.node.childImageSharp.fluid.src,
         srcSet: image.node.childImageSharp.fluid.srcSet,
-        sizes: image.node.childImageSharp.fluid.sizes,
+       
         title: image.node.name,
         alt: image.node.name,
         width: image.node.childImageSharp.original.width,
         height: image.node.childImageSharp.original.height,
-         fluid: image.node.childImageSharp.fluid
+        fluid: image.node.childImageSharp.fluid
       }
   });
 
@@ -150,17 +152,11 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       </PBox>
       <Content bg={project.color} py={10}>
         <PBox style={imagesAnimation} px={[6, 6, 8, 10]}>
-
- 
-              <GalleryLightbox 
-                photos={PHOTO_SET} 
-                direction={"column"} 
-                margin={5}             
-              />
-             
-         
-
-
+          <GalleryLightbox 
+            photos={PHOTO_SET} 
+            direction={"column"} 
+            margin={5}             
+          />
         </PBox>
       </Content>
       <PBox py={10} px={[6, 6, 8, 10]}>
@@ -200,14 +196,14 @@ export const query = graphql`
     images: allFile(filter: { relativePath: { regex: $images } }, sort: { fields: [birthtime], order: DESC }) {
       edges {
         node {
-
           name
           relativeDirectory
           childImageSharp {
             original{width, height}
-            fluid(quality: 95, maxWidth: 1200) {
+            fluid(quality: 95, maxWidth: 550) {
               ...GatsbyImageSharpFluid_tracedSVG
             }
+
           }
         }
       }

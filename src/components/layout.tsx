@@ -15,7 +15,7 @@ display: none;
 
     .bm-item {
       text-transform:uppercase;
-        text-align:center;  
+        text-align:right;  
         display: inline-block;
         text-decoration: none;
         margin-bottom: 5vh;
@@ -33,8 +33,7 @@ display: none;
         top: 1.5rem;
     }
     .bm-burger-bars {
-        background: #000;
-        background:  ${props => readableColor(`${props.color}`)};
+       background:  ${props => readableColor(`${props.color}`)};
 
     }
     .bm-cross-button {
@@ -43,11 +42,12 @@ display: none;
     }
     .bm-cross {
         background: #fff;
+          height:24px!important;
     }
     .bm-menu {
         background: rgba(0, 0, 0, 1);
         padding: 2.5em 1.5em 0;
-        font-size: 2em;
+        font-size: 1.5em;
     }
     .bm-morph-shape {
         fill: #373a47;
@@ -60,7 +60,7 @@ display: none;
         background: rgba(0, 0, 0, 0.5);
     }
 
-      @media (max-width: ${props => props.theme.breakpoints[1]}) {
+      @media (max-width: ${props => props.theme.breakpoints[2]}) {
     display: block;
   }
 `
@@ -143,6 +143,18 @@ const GlobalStyles = createGlobalStyle`
       color: ${theme.colors.primary};
     }
   }
+
+  ul {
+    list-style-type:none;
+    li {
+      text-align:right;
+      border-right:3px solid ${theme.colors.primary};
+      font-size:${theme.fontSizes[0]};
+      padding-right:1rem;
+    }
+
+
+  }
   
   ${reset}
 `
@@ -156,6 +168,7 @@ const PartialNavLink = (props: any) => (
     {props.children}
   </Link>
 )
+
 
 const Wrapper = styled.div`
   display: grid;
@@ -200,10 +213,10 @@ const SideBarInner = styled(Box)<{ bg: string }>`
 const Nav = styled(Flex)<{ color: string }>`
 
 
-        @media (max-width: ${props => props.theme.breakpoints[1]}) {
-      display:none;
-    
+  @media (max-width: ${props => props.theme.breakpoints[2]}) {
+      display:none;  
   }
+
   a {
     text-transform: uppercase;
     text-decoration: none;
@@ -233,7 +246,12 @@ const Nav = styled(Flex)<{ color: string }>`
       font-size: ${props => props.theme.fontSizes[0]};
       margin-left: ${props => props.theme.space[2]};
     }
+
+
   }
+
+  }
+
 `
 
 const Main = styled.main`
@@ -291,6 +309,7 @@ interface QueryResult {
       node: {
         name: string
         link: string
+    
       }
     }[]
   }
@@ -306,13 +325,16 @@ const Layout = ({ children, color }: LayoutProps) => {
         <Wrapper>
        <StyledBurgerMenu  color={color}>
         <Menu right>
-          <a id="home" className="menu-item" href="/">Home</a>
-          <a id="about" className="menu-item" href="/about">About</a>
-          <a id="contact" className="menu-item" href="/contact">Contact</a>
-           <SocialLinks>
-                <a target="_blank" rel="noopener noreferrer" href=""><FaFacebook size={30} color='white'/></a>           
-                <a target="_blank" rel="noopener noreferrer" href=""><FaInstagram size={30} color='white'/></a>
-              </SocialLinks>
+            {data.navigation.edges.map(({ node: item }) => (
+                  <Link to={item.link} key={item.link}>
+                    {item.name}
+                  </Link>
+                ))}
+
+          <SocialLinks>
+              <a target="_blank" rel="noopener noreferrer" href="" ><FaFacebook size={30} color='white'/></a>           
+              <a target="_blank" rel="noopener noreferrer" href="" ><FaInstagram size={30} color='white'/></a>
+            </SocialLinks>
         </Menu>
         </StyledBurgerMenu>
           <SideBarInner bg={color} as="aside" p={[6, 6, 8]}>
@@ -335,11 +357,23 @@ const Layout = ({ children, color }: LayoutProps) => {
                 flexDirection={['row', 'row', 'row', 'column']}
                 alignItems="flex-end"
               >
+              
+              <ul>
+               {data.projects.edges.map(({ node: project }) => (
+                  <li  key={project.title}><PartialNavLink to={project.slug}>
+                    {project.title}  
+                  </PartialNavLink>
+                  </li>
+
+                ))}
+            </ul>
                 {data.navigation.edges.map(({ node: item }) => (
                   <PartialNavLink to={item.link} key={item.name}>
-                    {item.name}
+                    {item.name}  
                   </PartialNavLink>
+
                 ))}
+
               </Nav>
                
             </Flex>
@@ -353,7 +387,7 @@ const Layout = ({ children, color }: LayoutProps) => {
               </SocialLinks>
               (c) Cyril Crespeau, 2019. 
               <br />
-             Tous droits réservés. <Link to={'/credit'}>crédits</Link>
+             Tous droits réservés. <Link to={'/credits'}>crédits</Link>
               
             </Box>
           </Footer>
@@ -369,11 +403,19 @@ Layout.defaultProps = defaultProps
 
 const query = graphql`
   query LayoutQuery {
-    navigation: allNavigationYaml {
+    navigation: allNavigationYaml (skip:1){
       edges {
         node {
           name
           link
+        }
+      }
+    }
+    projects: allProjectsYaml(skip:1) {
+      edges {
+        node {
+          title
+          slug
         }
       }
     }
