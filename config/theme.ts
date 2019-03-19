@@ -18,7 +18,8 @@ const theme: ThemeShape = {
   fontSizes: ['.9rem', '1.2rem', '1.44rem', '1.728rem', '2.074rem', '2.488rem'],
   colors: {
   
-    primary: '#017cd2',
+    //primary: '#017cd2',
+    primary: '#c66131',
     secondary: '#494992',
     grey: '#646066',
     shade: '#f5f5f5',

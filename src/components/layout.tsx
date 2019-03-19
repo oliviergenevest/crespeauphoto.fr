@@ -6,19 +6,20 @@ import Menu from 'react-burger-menu/lib/menus/slide'
 import 'typeface-raleway'
 import { Box, Flex } from '../elements'
 import theme from '../../config/theme'
+import config from '../../config'
 import reset from '../styles/reset'
 import Logo from './logo'
 import { FaFacebook, FaInstagram} from 'react-icons/fa'
 
 const StyledBurgerMenu = styled.div`
 display: none;
-
+    a {color:white;}
     .bm-item {
       text-transform:uppercase;
         text-align:right;  
         display: inline-block;
         text-decoration: none;
-        margin-bottom: 5vh;
+        margin-bottom: 2vh;
         color: #d1d1d1;
         transition: color 0.2s;
     }
@@ -136,7 +137,7 @@ const GlobalStyles = createGlobalStyle`
   }
   a {
     transition: all 0.3s ease-in-out;
-    color: black;
+   
     text-decoration: underline;
     &:hover,
     &:focus {
@@ -148,9 +149,10 @@ const GlobalStyles = createGlobalStyle`
     list-style-type:none;
     li {
       text-align:right;
-      border-right:3px solid ${theme.colors.primary};
-      font-size:${theme.fontSizes[0]};
-      padding-right:1rem;
+     
+      font-size:${theme.fontSizes[1]};
+     
+      
     }
 
 
@@ -325,15 +327,27 @@ const Layout = ({ children, color }: LayoutProps) => {
         <Wrapper>
        <StyledBurgerMenu  color={color}>
         <Menu right>
-            {data.navigation.edges.map(({ node: item }) => (
-                  <Link to={item.link} key={item.link}>
-                    {item.name}
-                  </Link>
+            <Link to="/" key="Crespeau">
+                   Cyril Crespeau
+            </Link>
+             <ul>
+               {data.projects.edges.map(({ node: project }) => (
+                  <li  key={project.title}><PartialNavLink to={project.slug}>
+                    {project.title}  
+                  </PartialNavLink>
+                  </li>
+
                 ))}
+            </ul>
+            {data.navigation.edges.map(({ node: item }) => (
+              <Link to={item.link} key={item.link}>
+                {item.name}
+              </Link>
+            ))}
 
           <SocialLinks>
-              <a target="_blank" rel="noopener noreferrer" href="" ><FaFacebook size={30} color='white'/></a>           
-              <a target="_blank" rel="noopener noreferrer" href="" ><FaInstagram size={30} color='white'/></a>
+              <a target="_blank" rel="noopener noreferrer" href={config.userFacebook} ><FaFacebook size={30} color='white'/></a>           
+              <a target="_blank" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={30} color='white'/></a>
             </SocialLinks>
         </Menu>
         </StyledBurgerMenu>
@@ -382,8 +396,8 @@ const Layout = ({ children, color }: LayoutProps) => {
           <Footer color={color}>
             <Box p={[6, 6, 8]} fontSize={0}>
             <SocialLinks>
-                <a target="_blank" rel="noopener noreferrer" href=""><FaFacebook size={20} color={readableColor(color)}/></a>           
-                <a target="_blank" rel="noopener noreferrer" href=""><FaInstagram size={20} color={readableColor(color)}/></a>
+                <a target="_blank" rel="noopener noreferrer" href={config.userFacebook}><FaFacebook size={20} color={readableColor(color)}/></a>           
+                <a target="_blank" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={20} color={readableColor(color)}/></a>
               </SocialLinks>
               (c) Cyril Crespeau, 2019. 
               <br />

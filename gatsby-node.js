@@ -4,7 +4,7 @@ const wrapper = promise =>
     if (result.errors) {
       throw result.errors
     }   
-    return result 
+    return result
   })
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -18,7 +18,7 @@ exports.createPages = async ({ graphql, actions }) => {
       { 
         projects: allProjectsYaml(skip:1) {
           edges {
-            node {
+            node { 
               slug
               images
             }
