@@ -148,7 +148,7 @@ const GlobalStyles = createGlobalStyle`
   }
   a {
     transition: all 0.3s ease-in-out;
-   
+   color:black;
     text-decoration: underline;
     &:hover,
     &:focus {
