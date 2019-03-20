@@ -358,8 +358,8 @@ const Layout = ({ children, color }: LayoutProps) => {
             ))}
 
           <SocialLinks>
-              <a target="_blank" rel="noopener noreferrer" href={config.userFacebook} ><FaFacebook size={30} color='white'/></a>           
-              <a target="_blank" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={30} color='white'/></a>
+              <a target="_blank" aria-label="Facebook" rel="noopener noreferrer" href={config.userFacebook} ><FaFacebook size={30} color='white'/></a>           
+              <a target="_blank" aria-label="Instagram" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={30} color='white'/></a>
             </SocialLinks>
         </Menu>
         </StyledBurgerMenu>
@@ -408,8 +408,8 @@ const Layout = ({ children, color }: LayoutProps) => {
           <Footer color={color}>
             <Box p={[6, 6, 8]} fontSize={0}>
             <SocialLinks>
-                <a target="_blank" rel="noopener noreferrer" href={config.userFacebook}><FaFacebook size={20} color={readableColor(color)}/></a>           
-                <a target="_blank" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={20} color={readableColor(color)}/></a>
+                <a target="_blank" aria-label="Facebook" rel="noopener noreferrer" href={config.userFacebook}><FaFacebook size={20} color={readableColor(color)}/></a>           
+                <a target="_blank" aria-label="Instagram" rel="noopener noreferrer" href={config.userInstagram}><FaInstagram size={20} color={readableColor(color)}/></a>
               </SocialLinks>
               (c) Cyril Crespeau, 2019. 
               <br />
