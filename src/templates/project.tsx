@@ -105,6 +105,7 @@ type PageProps = {
 
   
 
+  
 const Project: React.FunctionComponent<PageProps> = ({ data: { project, images } }) => {
   const categoryAnimation = useSpring({
     config: config.slow,

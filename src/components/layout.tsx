@@ -12,8 +12,15 @@ import Logo from './logo'
 import { FaFacebook, FaInstagram} from 'react-icons/fa'
 
 const StyledBurgerMenu = styled.div`
+
 display: none;
-    a {color:white;}
+    a {
+      color:#4343e2;
+      text-decoration:none;
+      :hover{
+        color:white;
+      }
+    }
     .bm-item {
       text-transform:uppercase;
         text-align:right;  
@@ -32,6 +39,10 @@ display: none;
         height: 25px;
         right: 2vw;
         top: 1.5rem;
+        @media (min-width: ${props => props.theme.breakpoints[1]}) {
+          top: 2.3rem;
+         }
+
     }
     .bm-burger-bars {
        background:  ${props => readableColor(`${props.color}`)};
@@ -47,7 +58,7 @@ display: none;
     }
     .bm-menu {
         background: rgba(0, 0, 0, 1);
-        padding: 2.5em 1.5em 0;
+        padding: 2.5em 1.2em 0;
         font-size: 1.5em;
     }
     .bm-morph-shape {
@@ -150,7 +161,7 @@ const GlobalStyles = createGlobalStyle`
     li {
       text-align:right;
      
-      font-size:${theme.fontSizes[1]};
+     
      
       
     }
@@ -223,7 +234,8 @@ const Nav = styled(Flex)<{ color: string }>`
     text-transform: uppercase;
     text-decoration: none;
     color: ${props => readableColor(`${props.color}`)};
-    font-size: ${props => props.theme.fontSizes[1]};
+
+    font-weight:bold;
     line-height: 1.5;
 
     &:hover,
@@ -265,7 +277,7 @@ const Main = styled.main`
 
 const Footer = styled.footer<{ color: string }>`
   position: fixed;
-   font-size: ${props => props.theme.fontSizes[0]};
+  font-size: ${props => props.theme.fontSizes[0]};
   width: ${props => props.theme.sidebarWidth.big};
   bottom: 0;
   text-align: right;
@@ -325,7 +337,7 @@ const Layout = ({ children, color }: LayoutProps) => {
       <>
         <GlobalStyles />
         <Wrapper>
-       <StyledBurgerMenu  color={color}>
+        <StyledBurgerMenu  color={color}>
         <Menu right>
             <Link to="/" key="Crespeau">
                    Cyril Crespeau
@@ -372,15 +384,15 @@ const Layout = ({ children, color }: LayoutProps) => {
                 alignItems="flex-end"
               >
               
-              <ul>
-               {data.projects.edges.map(({ node: project }) => (
+                <ul>
+                {data.projects.edges.map(({ node: project }) => (
                   <li  key={project.title}><PartialNavLink to={project.slug}>
                     {project.title}  
                   </PartialNavLink>
                   </li>
 
                 ))}
-            </ul>
+                </ul>
                 {data.navigation.edges.map(({ node: item }) => (
                   <PartialNavLink to={item.link} key={item.name}>
                     {item.name}  

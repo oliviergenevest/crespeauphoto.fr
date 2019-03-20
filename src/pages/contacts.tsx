@@ -15,9 +15,9 @@ const About = () => {
     <Layout>
       <SEO title="Contact | Cyril Crespeau - Photographe" desc="Cyril Crespeau - Photographe. Mon domaine d’activité s’étend de l’événementiel à la publicité." />
       <AnimatedBox style={pageAnimation} py={[6, 6, 6, 8]} px={[6, 6, 8, 6, 8, 13]}>
-        <h1>Ne pas hésiter ...</h1>
+        <h1>Contacts</h1>
         <p>
-          ... à me contacter par email ou téléphone, je serai ravi de vous répondre.
+          Ne pas hésiter ...... à me contacter par email ou téléphone, je serai ravi de vous répondre.
          
         </p>
         <h2>Adresse :</h2>

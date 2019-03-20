@@ -15,9 +15,9 @@ const About = () => {
     <Layout>
       <SEO title="Références | Cyril Crespeau - Photographe" desc="Cyril Crespeau - Photographe. Mon domaine d’activité s’étend de l’événementiel à la publicité." />
       <AnimatedBox style={pageAnimation} py={[6, 6, 6, 8]} px={[6, 6, 8, 6, 8, 13]}>
-        <h1>Références</h1>
+        <h1>A propos</h1>
         <p>
-         Groupe la Varappe, EDF, Jars, Eau de Vals, AOC Cornas, ORANO, Les Villages Clubs du Soleil, Conseil Départemental de la Drôme, Provence Santé, Vibram, Lafuma, Domaine Lou Capitelle, ENJA Records, Les thermes de Vals les bains, Association Grande Traversée des Alpes (GTA), Crest Jazz Vocal, FFTRI, FFA, Laboratoire BIMONT, BEAL, CCI Drôme
+          Mon domaine d’activité s’étend de l’événementiel à la publicité.
         </p>
       </AnimatedBox>
     </Layout>

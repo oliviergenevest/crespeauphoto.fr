@@ -3,7 +3,7 @@ module.exports = {
 
   siteTitle: 'Photographe | Cyril Crespeau ', // Navigation and Site Title
   siteTitleAlt: 'Photographe | Cyril Crespeau | photographie HD, projets, idées, web, Reportage, Publicité, Communication, Outdoor, Industrie, Loisirs, Tourisme, Studio', // Alternative Site title for SEO
-  siteTitleShort: 'Cyril Crespeau', // short_name for manifest
+  siteTitleShort: 'Photographe', // short_name for manifest
   siteHeadline: 'Mon domaine d’activité s’étend de l’événementiel à la publicité.', // Headline for schema.org JSONLD
   siteUrl: 'https://crespeauphoto.fr', // Domain of your site. No trailing slash!
   siteLanguage: 'fr', // Language Tag on <html> element
