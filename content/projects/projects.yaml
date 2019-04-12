@@ -9,7 +9,7 @@
 - title: "Industrie"
   title_detail: "Industrie"
   slug: "/industrie"
-  references: "EDF | ORANO | ELPACK | Groupe La Varappe | EcoConcept | CEA Marcoule | BEAL "
+  references: "EDF | ORANO | ELPACK | Groupe La Varappe | EcoConcept | CEA Marcoule "
   color: "black"
   images: "industrie"
   cover: "./industrie/industrie-001.jpg"
