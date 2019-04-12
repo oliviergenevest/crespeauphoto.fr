@@ -220,7 +220,11 @@ const SideBarInner = styled(Box)<{ bg: string }>`
 
   svg {
     fill: ${props => readableColor(`${props.bg}`)};
+    .st0{clip-path:url(#SVGID_2_);fill:${props =>props.bg};}
+  .st1{clip-path:url(#SVGID_2_);}
   }
+
+
 `
 
 const Nav = styled(Flex)<{ color: string }>`
@@ -370,7 +374,7 @@ const Layout = ({ children, color }: LayoutProps) => {
               alignItems={['center', 'center', 'center', 'flex-end']}
               justifyContent="space-between"
             >
-              <Box >
+              <Box width={['8rem', '9rem', '10rem', '11rem']}>
                 <Link to="/" aria-label="Cyril Crespeau, retour à l'accueil">
                   <Logo />
                 </Link>

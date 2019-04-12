@@ -91,7 +91,7 @@ const Homepage = styled(GridItem)`
 
 
 
-const Index: React.FunctionComponent<PageProps> = ({ data: { projectHomepage, images } }) => {
+const Index: React.FunctionComponent<PageProps> = ({ data: { projectHomepage, images, imagesFull } }) => {
   const pageAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0 },
@@ -113,12 +113,26 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { projectHomepage, im
         }
   });
 
+   const PHOTO_SET_FULL = images.edges.map((imagesFull, i) => {
+      // jeux de données un pour lightbox (fullsize)
+        return {
+          src: imagesFull.node.childImageSharp.fluid.src,
+          srcSet: imagesFull.node.childImageSharp.fluid.srcSet,
+          title: imagesFull.node.name,
+          alt: imagesFull.node.name,
+          width: imagesFull.node.childImageSharp.original.width,
+          height: imagesFull.node.childImageSharp.original.height,
+          fluid: imagesFull.node.childImageSharp.fluid
+        }
+  });
+
   return (
     <Layout>
       <SEO />
 
         <GalleryLightbox 
-            photos={PHOTO_SET} 
+            photos={PHOTO_SET}
+            fullSizePhotos={PHOTO_SET_FULL} 
             direction={"column"} 
             margin={1}             
           />
@@ -144,7 +158,7 @@ export const query = graphql`
           relativeDirectory
           childImageSharp {
             original{width, height}
-            fluid(quality: 95, maxWidth: 550) {
+            fluid(quality: 85, maxWidth: 500) {
               ...GatsbyImageSharpFluid
             }
 
@@ -153,7 +167,21 @@ export const query = graphql`
       }
     }
 
+    imagesFull: allFile(filter: { relativeDirectory: {eq:"homepage" } }, sort: { fields: [birthtime], order: DESC }) {
+      edges {
+        node {
+          name
+          relativeDirectory
+          childImageSharp {
+            original{width, height}
+            fluid(quality: 95, maxWidth: 1200) {
+              ...GatsbyImageSharpFluid
+            }
 
+          }
+        }
+      }
+    }
 
   }
 `

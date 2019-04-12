@@ -49,7 +49,7 @@ const ImageComponent = ({index,onClick,photo,margin,direction,top,left}) => {
 class GalleryLightbox extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { currentImage: 0 , photos:this.props.photos, direction:this.props.direction, margin:this.props.margin}
+    this.state = { currentImage: 0 , photos:this.props.photos, fullSizePhotos:this.props.fullSizePhotos, direction:this.props.direction, margin:this.props.margin}
     this.closeLightbox = this.closeLightbox.bind(this)
     this.openLightbox = this.openLightbox.bind(this)
     this.gotoNext = this.gotoNext.bind(this)
@@ -89,7 +89,7 @@ class GalleryLightbox extends React.Component {
           ImageComponent={ImageComponent} // on utilise gatsby-image pour rendre les images dans la galerie
           
 	    />
-        <Lightbox images={this.state.photos}
+        <Lightbox images={this.state.fullSizePhotos}
           backdropClosesModal={true}
           onClose={this.closeLightbox}
           onClickPrev={this.gotoPrevious}

@@ -38,7 +38,7 @@ const Content = styled(Box)<{ bg: string }>`
   }
 `
 
-const Category = styled(AnimatedBox)`
+const References = styled(AnimatedBox)`
   letter-spacing: 0.05em;
   font-size: ${props => props.theme.fontSizes[1]};
   text-transform: uppercase;
@@ -55,6 +55,7 @@ const Description = styled(animated.div)`
 const PButton = styled(Button)<{ color: string }>`
   background: ${props => (props.color === 'white' ? 'black' : props.color)};
   color: ${props => readableColor(props.color === 'white' ? 'black' : props.color)};
+  cursor:pointer;
 `
 
 type PageProps = {
@@ -62,7 +63,7 @@ type PageProps = {
     project: {
       title_detail: string
       color: string
-      category: string
+      references: string
       desc: string
       slug: string
       parent: {
@@ -106,7 +107,7 @@ type PageProps = {
   
 
   
-const Project: React.FunctionComponent<PageProps> = ({ data: { project, images } }) => {
+const Project: React.FunctionComponent<PageProps> = ({ data: { project, images, imagesFull } }) => {
   const categoryAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0, transform: 'translate3d(0, -30px, 0)' },
@@ -132,6 +133,20 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       }
   });
 
+ const PHOTO_SET_FULL = imagesFull.edges.map((image, i) => {
+    // creer 2 juex de données un pour lightbox (fullsize) l'autre pour gallery (thumbnails , c'est celui-ci)
+    // pour cela : modifier la requele graphql en bas, la list des props en haut et passer en prop les 2 listes au composant GalleryLightbox
+      return {
+        src: image.node.childImageSharp.fluid.src,
+        srcSet: image.node.childImageSharp.fluid.srcSet,
+       
+        title: image.node.name,
+        alt: image.node.name,
+        width: image.node.childImageSharp.original.width,
+        height: image.node.childImageSharp.original.height,
+        fluid: image.node.childImageSharp.fluid
+      }
+  });
 
   return (
     <Layout color={project.color}>
@@ -145,7 +160,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       />
 
       <PBox py={10} px={[6, 6, 8, 10]}>
-        <Category style={categoryAnimation}>{project.category}</Category>
+        <References style={categoryAnimation}>{project.references}</References>
         <animated.h1 style={titleAnimation}>{project.title_detail}</animated.h1>
         <Description style={descAnimation}>
           <div dangerouslySetInnerHTML={{ __html: project.desc }} />
@@ -155,6 +170,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
         <PBox style={imagesAnimation} px={[6, 6, 8, 10]}>
           <GalleryLightbox 
             photos={PHOTO_SET} 
+            fullSizePhotos={PHOTO_SET_FULL} 
             direction={"column"} 
             margin={5}             
           />
@@ -162,7 +178,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images }
       </Content>
       <PBox py={10} px={[6, 6, 8, 10]}>
         <h2>Vous avez un projet ?</h2>
-        <Link to ="/contact"><PButton color={project.color} py={4} px={8}>
+        <Link to ="/contacts"><PButton color={project.color} py={4} px={8}>
          Me contacter
         </PButton></Link>
       </PBox>
@@ -177,7 +193,7 @@ export const query = graphql`
     project: projectsYaml(slug: { eq: $slug }) {
       title_detail
       color
-      category
+      references
       desc
       slug
       parent {
@@ -201,7 +217,22 @@ export const query = graphql`
           relativeDirectory
           childImageSharp {
             original{width, height}
-            fluid(quality: 95, maxWidth: 550) {
+            fluid(quality: 75, maxWidth: 550) {
+              ...GatsbyImageSharpFluid
+            }
+
+          }
+        }
+      }
+    }
+    imagesFull: allFile(filter: { relativePath: { regex: $images } }, sort: { fields: [birthtime], order: DESC }) {
+      edges {
+        node {
+          name
+          relativeDirectory
+          childImageSharp {
+            original{width, height}
+            fluid(quality: 95, maxWidth: 1800) {
               ...GatsbyImageSharpFluid
             }
 
