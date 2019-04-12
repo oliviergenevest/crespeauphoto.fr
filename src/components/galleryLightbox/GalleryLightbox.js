@@ -97,6 +97,7 @@ class GalleryLightbox extends React.Component {
           imageCountSeparator="/"
           currentImage={this.state.currentImage}
           isOpen={this.state.lightboxIsOpen}
+          width={2000}
         />
       </div>
     )
