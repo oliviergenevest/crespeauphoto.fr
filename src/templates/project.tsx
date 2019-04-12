@@ -178,7 +178,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images, 
       </Content>
       <PBox py={10} px={[6, 6, 8, 10]}>
         <h2>Vous avez un projet ?</h2>
-        <Link to ="/contacts"><PButton color={project.color} py={4} px={8}>
+        <Link to ="/contact"><PButton color={project.color} py={4} px={8}>
          Me contacter
         </PButton></Link>
       </PBox>
