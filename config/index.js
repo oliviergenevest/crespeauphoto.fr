@@ -7,7 +7,7 @@ module.exports = {
   siteHeadline: 'Mon domaine d’activité s’étend de l’événementiel à la publicité.', // Headline for schema.org JSONLD
   siteUrl: 'https://crespeauphoto.fr', // Domain of your site. No trailing slash!
   siteLanguage: 'fr', // Language Tag on <html> element
-  siteLogo: '/logos/favicon.png', // Used for SEO and manifest
+  siteLogo: '/logos/favicon.jpg', // Used for SEO and manifest
   siteDescription: 'Photographe | Cyril Crespeau | photographie HD, projets, idées, web, Reportage, Publicité, Communication, Outdoor, Industrie, Loisirs, Tourisme, Studio',
   author: 'Cyril Crespeau', // Author for schema.org JSONLD
 
