@@ -2,5 +2,5 @@
   link: "/"
 - name: "A propos"
   link: "/a-propos"
-- name: "Contacts"
-  link: "/contacts"
+- name: "Contact"
+  link: "/contact"
