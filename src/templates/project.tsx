@@ -166,7 +166,7 @@ const Project: React.FunctionComponent<PageProps> = ({ data: { project, images, 
           <div dangerouslySetInnerHTML={{ __html: project.desc }} />
         </Description>
       </PBox>
-      <Content bg={project.color} py={10}>
+      <Content bg={project.color} py={0}>
         <PBox style={imagesAnimation} px={[6, 6, 8, 10]}>
           <GalleryLightbox 
             photos={PHOTO_SET} 
