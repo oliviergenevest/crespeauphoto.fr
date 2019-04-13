@@ -273,9 +273,15 @@ const Nav = styled(Flex)<{ color: string }>`
 `
 
 const Main = styled.div`
-  grid-column-start: 2;
-  @media (min-width: calc(${props => props.theme.breakpoints[2]} + 1px)) {
+ @media (max-width: 1000px) {
+    grid-column-start: 1;
+  }
+   @media (min-width: 1001px) {
     grid-column-start: 2;
+  }
+ /*
+  @media (min-width: calc(${props => props.theme.breakpoints[2]} + 1px)) {
+    grid-column-start: 2;*/
   }
 `
 
