@@ -37,7 +37,7 @@ display: none;
         position: fixed;
         width: 30px;
         height: 25px;
-        right: 2vw;
+        right: 4vw;
         top: 1.5rem;
         @media (min-width: ${props => props.theme.breakpoints[1]}) {
           top: 2.3rem;
